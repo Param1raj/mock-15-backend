@@ -49,17 +49,18 @@ AuthRouter.post("/login", async (req, res) => {
         if(user.length !== 0){
             let password = user[0].password;
             // console.log(password);
-            bcrypt.compare(body.password, password, function(err, result) {
+            bcrypt.compare(`${body.password}`, `${password}`, function(err, result) {
                 // result == true
                 if(err){
                     throw err;
                 }
                 if(result){
-                    const token = jwt.sign({bname:body.name,email:body.emai}, process.env.secretKey);
-                    console.log(token);
+                    console.log(user[0]._id);
+                    const token = jwt.sign({id:`${user[0]._id}`}, process.env.secretKey);
+                    // console.log(token);
                     res.status(200).send({msg:"Successfully login",token:token});
                 }else{
-                    res.status(400).send({msg:"Wrong crendentials"});
+                    res.status(401).send({msg:"Wrong crendentials"});
                 }
             });
         }else {
