@@ -2,7 +2,11 @@ const express = require('express');
 const { connection } = require('./config/db');
 const {AuthRouter} = require('./routes/Auth.routes');
 const {HistoryRouter} = require("./routes/history.route");
+const cors = require('cors');
 
+app.use(cors({
+    origin:"*"
+}))
 
 const app = express();
 app.use(express.json());
