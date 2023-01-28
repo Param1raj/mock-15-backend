@@ -11,7 +11,7 @@ const UserHistoryMddel = mongoose.model('result',{
     },
     result:{
         required:true,
-        type:String
+        type:Number
     },
     user_id:String
 })

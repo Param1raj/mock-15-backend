@@ -33,12 +33,16 @@ HistoryRouter.get('/', async (req, res) => {
 
 HistoryRouter.post('/', HistoryMiddlewarePost,async (req, res) => {
     let body = req.body;
+    // height in meters
+    let height = (body.height)*0.304;
+    let result = body.weight/(height*height);
+    body.result = result;
     if (!body.weight || !body.height || !body.result || !body.user_id || body.weight === "" || body.height === "" || body.result === "" || body.user_id === "") {
-        res.send({msg:"invalite details"});
+        res.status(401).send({msg:"invalite details"});
     }else{
         let post = await UserHistoryMddel(body);
         post.save();
-        res.send({msg:"successfully added"});
+        res.send({msg:"success",result:result});
     }
 })
 
